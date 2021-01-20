@@ -1,5 +1,6 @@
 import express from 'express';
 import Post from '../../models/post';
+import auth from '../../middleware/auth';
 
 const router = express.Router();
 
@@ -9,17 +10,16 @@ router.get('/', async (req, res) => {
   res.json(postFindResult);
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', auth, async (req, res, next) => {
   try {
-    console.log(req, '[post req]');
+    console.log(`[post req] : ${req}`);
     const {title, contents, fileUrl, creator} = req.body;
-    const newPost = await Post.create({
-      title, contents, fileUrl, creator
-    });
+    const newPost = await Post.create({title, contents, fileUrl, creator});
+    console.log(`[await res] : ${newPost}`);
     res.json(newPost);
   } catch (e) {
     console.log(`[async error] : ${e}`);
   }
 });
 
-export default router
+export default router;
