@@ -1,10 +1,11 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import {JWT_SECRET} from '../../config';
+import config from '../../config';
 import User from '../../models/user';
 
 const router = express.Router();
+const {JWT_SECRET} = config;
 
 /**
  * @description getUser api
