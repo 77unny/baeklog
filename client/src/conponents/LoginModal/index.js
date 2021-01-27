@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {CLEAR_ERROR_REQUEST, LOGIN_REQUEST} from '../../redux/types';
+import {CLEAR_ERROR_REQUEST, LOGIN_REQUEST, REGISTER_REQUEST} from '../../redux/types';
 import {Alert, Button, Form, Modal, Input} from 'antd';
 
 function LoginModal(props) {
   const [modal, setModal] = useState(false);
-  const [localMag, setLocalMsg] = useState('');
-  const [form, setValues] = useState({
-    email   : '',
-    password: ''
-  });
+  const [localMsg, setLocalMsg] = useState('');
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
   const {errorMsg, isLoading} = useSelector(state => state.auth);
 
@@ -24,25 +21,18 @@ function LoginModal(props) {
     dispatch({
       type: CLEAR_ERROR_REQUEST
     });
+    form.resetFields();
     setModal(false);
   };
 
-  const onChange = e => {
-    setValues({
-      ...form,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-    const {email, password} = form;
-    const user = {email, password};
-    console.log('[onsubmit]', user);
-    dispatch({
-      type: LOGIN_REQUEST,
-      payload: user
-    });
+  const onSubmit = () => {
+    form.validateFields().then(values => {
+      form.resetFields();
+      dispatch({
+        type   : LOGIN_REQUEST,
+        payload: values
+      });
+    }).catch(e => console.error(e));
   };
 
   useEffect(() => {
@@ -63,19 +53,19 @@ function LoginModal(props) {
                <Button key="submit" type="primary" loading={isLoading} onClick={onSubmit} children={'로그인'}/>,
              ]}
       >
-        {localMag && <Alert message={localMag}  type="warning" showIcon />}
-        <Form>
+        {localMsg && <Alert message={localMsg} type="warning" showIcon/>}
+        <Form form={form}>
           <Form.Item
             label="email"
             name="email"
             rules={[
               {
                 required: true,
-                message: 'email을 입력해주세요.',
+                message : 'email을 입력해주세요.',
               },
             ]}
           >
-            <Input name="email" onChange={onChange}/>
+            <Input name="email"/>
           </Form.Item>
           <Form.Item
             label="password"
@@ -83,11 +73,11 @@ function LoginModal(props) {
             rules={[
               {
                 required: true,
-                message: 'password를 입력해주세요.',
+                message : 'password를 입력해주세요.',
               },
             ]}
           >
-            <Input.Password name="password" onChange={onChange}/>
+            <Input.Password name="password"/>
           </Form.Item>
         </Form>
       </Modal>
