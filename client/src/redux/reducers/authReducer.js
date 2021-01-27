@@ -4,7 +4,10 @@ import {
   CLEAR_ERROR_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
-  LOGIN_SUCCESS
+  LOGIN_SUCCESS,
+  LOGOUT_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
 } from '../types';
 
 const initialState = {
@@ -22,6 +25,7 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
+    case LOGOUT_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -39,6 +43,7 @@ const authReducer = (state = initialState, action) => {
         errorMsg       : ''
       };
     case LOGIN_FAILURE :
+    case LOGOUT_FAILURE :
       localStorage.removeItem('token');
       return {
         ...state,
@@ -50,6 +55,17 @@ const authReducer = (state = initialState, action) => {
         userId         : null,
         userRole       : null,
         errorMsg       : action.payload.data.msg
+      };
+    case LOGOUT_SUCCESS:
+      localStorage.removeItem('token');
+      return {
+        token          : null,
+        isAuthenticated: false,
+        isLoading      : false,
+        user           : null,
+        userId         : null,
+        userRole       : null,
+        errorMsg       : ''
       };
     case CLEAR_ERROR_REQUEST :
       return {
@@ -67,8 +83,8 @@ const authReducer = (state = initialState, action) => {
         errorMsg: null
       };
     default :
-      return state
+      return state;
   }
 };
 
-export default authReducer
+export default authReducer;
