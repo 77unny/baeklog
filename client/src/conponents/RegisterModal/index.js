@@ -17,7 +17,7 @@ function RegisterModal(props) {
   const onSubmit = () => {
     form.validateFields().then(values => {
       form.resetFields();
-      console.log(values);
+      setModal(!modal);
       dispatch({
         type   : REGISTER_REQUEST,
         payload: values
