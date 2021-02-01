@@ -6,6 +6,23 @@ import {LOGOUT_REQUEST} from '../../redux/types';
 import RegisterModal from '../RegisterModal';
 import {Link} from 'react-router-dom';
 
+const commonMenuList = [
+  {
+    id   : 1,
+    key  : 'Home',
+    name : 'Home',
+    path : '/',
+    exact: true
+  },
+  {
+    id   : 2,
+    key  : 'Posts',
+    name : 'Posts',
+    path : '/Posts',
+    exact: true
+  }
+]
+
 const memberMenuList = [
   {
     id   : 1,
@@ -77,6 +94,7 @@ function Navigation() {
   return (
     <Container>
       <MenuList mode="horizontal" onClick={onClick}>
+        {commonMenuList.map(menu => <Item key={menu.key}><Link to={menu.path}>{menu.name}</Link></Item>)}
         {isAuthenticated ?
           memberMenuList.map(menu => <Item key={menu.key}><Link to={menu.path}>{menu.name}</Link></Item>) :
           guestMenuList.map(menu => <Item key={menu.key}><Link to={menu.path}>{menu.name}</Link></Item>)}
