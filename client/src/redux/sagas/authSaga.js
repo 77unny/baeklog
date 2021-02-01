@@ -6,7 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_FAILURE,
   LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
+  LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS,
   USER_LOADING_FAILURE,
   USER_LOADING_REQUEST,
   USER_LOADING_SUCCESS
@@ -88,10 +88,41 @@ function* watchingUserLoading() {
   yield takeEvery(USER_LOADING_REQUEST, userLoading);
 }
 
+const fetchRegisterUser = userData => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  return axios.post('api/user', userData, config);
+};
+
+function* registerUser(action) {
+  try {
+    const result = yield call(fetchRegisterUser, action.payload);
+    console.log('[registerUser]', result);
+    yield put({
+      type   : REGISTER_SUCCESS,
+      payload: result.data
+    });
+  } catch (e) {
+    yield put({
+      type   : REGISTER_FAILURE,
+      payload: e.response
+    });
+  }
+}
+
+function* watchingRegisterUser() {
+  yield takeEvery(REGISTER_REQUEST, registerUser);
+}
+
+
 export default function* authSaga() {
   yield all([
     fork(watchingLoginUser),
     fork(watchingLogoutUser),
     fork(watchingUserLoading),
+    fork(watchingRegisterUser),
   ]);
 }
