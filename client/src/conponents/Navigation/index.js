@@ -1,10 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Container, MenuList, Item} from './Navigation.style';
+import {Container, MenuList, Item, ItemLink} from './Navigation.style';
 import LoginModal from '../LoginModal';
 import {useDispatch, useSelector} from 'react-redux';
 import {LOGOUT_REQUEST} from '../../redux/types';
 import RegisterModal from '../RegisterModal';
-import {Link} from 'react-router-dom';
 
 const commonMenuList = [
   {
@@ -94,10 +93,10 @@ function Navigation() {
   return (
     <Container>
       <MenuList mode="horizontal" onClick={onClick}>
-        {commonMenuList.map(menu => <Item key={menu.key}><Link to={menu.path}>{menu.name}</Link></Item>)}
+        {commonMenuList.map(menu => <Item key={menu.key}><ItemLink to={menu.path}>{menu.name}</ItemLink></Item>)}
         {isAuthenticated ?
-          memberMenuList.map(menu => <Item key={menu.key}><Link to={menu.path}>{menu.name}</Link></Item>) :
-          guestMenuList.map(menu => <Item key={menu.key}><Link to={menu.path}>{menu.name}</Link></Item>)}
+          memberMenuList.map(menu => <Item key={menu.key}><ItemLink to={menu.path}>{menu.name}</ItemLink></Item>) :
+          guestMenuList.map(menu => <Item key={menu.key}><ItemLink to={menu.path}>{menu.name}</ItemLink></Item>)}
       </MenuList>
       {isAuthenticated ? <p onClick={onLogout}>로그아웃</p> : <LoginModal/>}
       <RegisterModal/>
