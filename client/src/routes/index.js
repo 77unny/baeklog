@@ -25,7 +25,7 @@ function Routers(props) {
         <Switch>
           <Route path={'/'} exact component={Home}/>
           <Route path={'/posts'} exact component={PostList}/>
-          <Route path={'/posts:id'} exact component={PostDetail}/>
+          <Route path={'/posts/:id'} exact component={PostDetail}/>
           <Route path={'/posts/'} exact component={PostDetail}/>
           <Route path={'/write'} exact component={PostWrite}/>
           <Route path={'/search:keyword'} exact component={Search}/>
