@@ -20,7 +20,7 @@ const commonMenuList = [
     path : '/Posts',
     exact: true
   }
-]
+];
 
 const memberMenuList = [
   {
@@ -80,7 +80,6 @@ function Navigation() {
       type: LOGOUT_REQUEST
     });
   }, [dispatch]);
-  const onClick = e => console.log(e);
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
@@ -92,7 +91,7 @@ function Navigation() {
 
   return (
     <Container>
-      <MenuList mode="horizontal" onClick={onClick}>
+      <MenuList mode="horizontal">
         {commonMenuList.map(menu => <Item key={menu.key}><ItemLink to={menu.path}>{menu.name}</ItemLink></Item>)}
         {isAuthenticated ?
           memberMenuList.map(menu => <Item key={menu.key}><ItemLink to={menu.path}>{menu.name}</ItemLink></Item>) :
