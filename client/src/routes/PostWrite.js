@@ -1,8 +1,11 @@
 import React from 'react';
+import PostEditor from '../conponents/PostEditor';
 
 function PostWrite(props) {
   return (
-    <div>PostWrite</div>
+    <div>PostWrite
+      <PostEditor/>
+    </div>
   );
 }
 
