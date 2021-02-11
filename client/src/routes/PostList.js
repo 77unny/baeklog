@@ -6,7 +6,7 @@ import {Spin} from 'antd';
 import Posts from '../conponents/Posts';
 
 function PostList(props) {
-  const {posts} = useSelector(state => state.posts);
+  const {posts, loading} = useSelector(state => state.posts);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,8 +16,8 @@ function PostList(props) {
   return (
     <>
       <Helmet title="POSTS"/>
-      {posts ? <Posts posts={posts}/> : <Spin/>
-      }
+      {loading && <Spin/>}
+      {posts && <Posts posts={posts}/>}
     </>
   );
 }
