@@ -31,7 +31,7 @@ const postcssNormalize = require('postcss-normalize');
 
 const appPackageJson = require(paths.appPackageJson);
 
-// CKEditor5 settings
+// CKEditor5 setting
 const {styles} = require('@ckeditor/ckeditor5-dev-utils');
 const CKEditorWebpackPlugin = require('@ckeditor/ckeditor5-dev-webpack-plugin');
 
@@ -492,7 +492,6 @@ module.exports = function (webpackEnv) {
                 }
               ]
             },
-
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
             // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -502,7 +501,6 @@ module.exports = function (webpackEnv) {
             // By default we support CSS Modules with the extension .module.css
             {
               test   : cssRegex,
-              // CKEditor5 setting
               exclude: [
                 cssModuleRegex,
                 /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
@@ -522,12 +520,11 @@ module.exports = function (webpackEnv) {
             // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
             // using the extension .module.css
             {
-              test: cssModuleRegex,
-              // CKEditor5 setting
+              test   : cssModuleRegex,
               exclude: [
                 /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
               ],
-              use : getStyleLoaders({
+              use    : getStyleLoaders({
                 importLoaders: 1,
                 sourceMap    : isEnvProduction
                   ? shouldUseSourceMap
@@ -586,7 +583,6 @@ module.exports = function (webpackEnv) {
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              // CKEditor5 setting
               exclude: [
                 /\.(js|mjs|jsx|ts|tsx)$/,
                 /\.html$/,
@@ -784,6 +780,10 @@ module.exports = function (webpackEnv) {
             }),
           },
         },
+      }),
+      // CKEditor5 Setting
+      new CKEditorWebpackPlugin({
+        language: "ko",
       }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
