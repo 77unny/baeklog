@@ -17,7 +17,7 @@ const s3 = new AWS.S3({
 const uploadS3 = multer({
   storage: multerS3({
     s3,
-    bucket: 'backlog/upload',
+    bucket: 'baeklog/upload',
     region: 'ap-northeast-2',
     key(req, file, cb) {
       const ext = path.extname(file.originalname);
