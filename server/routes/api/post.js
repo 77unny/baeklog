@@ -8,13 +8,13 @@ import multerS3 from 'multer-s3';
 import path from 'path';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
-import moment from 'moment'
-import { isNullOrUndefined } from "util";
+import moment from 'moment';
+import {isNullOrUndefined} from 'util';
 
 dotenv.config();
 
 const s3 = new AWS.S3({
-  accessKeyId    : process.env.AWS_KEY,
+  accessKeyId: process.env.AWS_KEY,
   secretAccessKey: process.env.AWS_PRIVATE_KEY
 });
 
@@ -109,6 +109,18 @@ router.post('/', uploadS3.none(), async (req, res, next) => {
 
   } catch (e) {
     console.error(e);
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id).populate('creator', 'name').populate({
+      path  : 'category',
+      select: 'categoryName'
+    });
+  } catch (e) {
+    console.error(e);
+    next(e);
   }
 });
 
