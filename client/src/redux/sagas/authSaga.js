@@ -6,14 +6,16 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_FAILURE,
   LOGOUT_REQUEST,
-  LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS,
+  LOGOUT_SUCCESS,
+  REGISTER_FAILURE,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
   USER_LOADING_FAILURE,
   USER_LOADING_REQUEST,
   USER_LOADING_SUCCESS
 } from '../types';
 
 const fetchUser = loginData => {
-  console.log('[login data]', loginData);
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -25,7 +27,6 @@ const fetchUser = loginData => {
 function* loginUser(action) {
   try {
     const result = yield call(fetchUser, action.payload);
-    console.log('[loginUser]', result);
     yield put({
       type   : LOGIN_SUCCESS,
       payload: result.data
@@ -70,7 +71,6 @@ const fetchUserLoading = token => {
 
 function* userLoading(action) {
   try {
-    console.log('[userLoading]', action);
     const result = yield call(fetchUserLoading, action.payload);
     yield put({
       type   : USER_LOADING_SUCCESS,
@@ -100,7 +100,6 @@ const fetchRegisterUser = userData => {
 function* registerUser(action) {
   try {
     const result = yield call(fetchRegisterUser, action.payload);
-    console.log('[registerUser]', result);
     yield put({
       type   : REGISTER_SUCCESS,
       payload: result.data
@@ -116,7 +115,6 @@ function* registerUser(action) {
 function* watchingRegisterUser() {
   yield takeEvery(REGISTER_REQUEST, registerUser);
 }
-
 
 export default function* authSaga() {
   yield all([
