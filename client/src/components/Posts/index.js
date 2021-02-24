@@ -26,7 +26,7 @@ function Posts({posts}) {
             />
           }>
           <List.Item.Meta
-            title={<Link to={`/posts/${post._id}`}>{post.title}</Link>}
+            title={<Link to={`/post/${post._id}`}>{post.title}</Link>}
             description={post.description}
           />
           {post.content}
