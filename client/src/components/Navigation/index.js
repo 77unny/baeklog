@@ -15,9 +15,9 @@ const commonMenuList = [
   },
   {
     id   : 2,
-    key  : 'Posts',
-    name : 'Posts',
-    path : '/Posts',
+    key  : 'posts',
+    name : 'posts',
+    path : '/posts',
     exact: true
   }
 ];
@@ -25,22 +25,15 @@ const commonMenuList = [
 const memberMenuList = [
   {
     id   : 1,
-    key  : '회원메뉴1',
-    name : '회원메뉴1',
-    path : '#',
+    key  : 'write',
+    name : 'write',
+    path : '/write',
     exact: true
   },
   {
     id   : 2,
     key  : '회원메뉴2',
     name : '회원메뉴2',
-    path : '#',
-    exact: true
-  },
-  {
-    id   : 3,
-    key  : '회원메뉴3',
-    name : '회원메뉴3',
     path : '#',
     exact: true
   }
@@ -85,7 +78,6 @@ function Navigation() {
   };
 
   useEffect(() => {
-    console.log('[LOGIN STATE]', isAuthenticated);
     setIsOpen(false);
   }, [user]);
 
