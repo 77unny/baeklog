@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 import {useDispatch, useSelector} from 'react-redux';
 import {POSTS_LOADING_REQUEST} from '../redux/types';
 import {Spin} from 'antd';
-import Posts from '../conponents/Posts';
+import Posts from '../components/Posts';
 
 function PostList(props) {
   const {posts, loading} = useSelector(state => state.posts);

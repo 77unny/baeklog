@@ -6,8 +6,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import Header from '../conponents/Header';
-import Footer from '../conponents/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import Home from './Home';
 import PostList from './PostList';
 import PostWrite from './PostWrite';
@@ -24,11 +24,10 @@ function Routers(props) {
       <Content>
         <Switch>
           <Route path={'/'} exact component={Home}/>
-          <Route path={'/posts'} exact component={PostList}/>
-          <Route path={'/posts/:id'} exact component={PostDetail}/>
-          <Route path={'/posts/'} exact component={PostDetail}/>
-          <Route path={'/write'} exact component={PostWrite}/>
-          <Route path={'/search:keyword'} exact component={Search}/>
+          <Route path={'/posts'} component={PostList}/>
+          <Route path={'/post/:id'} component={PostDetail}/>
+          <Route path={'/write'} component={PostWrite}/>
+          <Route path={'/search:keyword'} component={Search}/>
           <Redirect from={'*'} to={'/'}/>
         </Switch>
       </Content>

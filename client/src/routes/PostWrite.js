@@ -1,5 +1,5 @@
 import React from 'react';
-import PostEditor from '../conponents/PostEditor';
+import PostEditor from '../components/PostEditor';
 import {useSelector} from 'react-redux';
 
 function PostWrite(props) {
