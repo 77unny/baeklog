@@ -6,12 +6,26 @@ import {editorConfiguration} from './EditorConfig';
 import MyCustomInit from './UploadAdapter';
 import {Container} from '../Footer/Footer.style';
 import {Button, Form, Input} from 'antd';
+import {useDispatch} from 'react-redux';
+import {POSTS_UPLOAD_REQUEST} from '../../redux/types';
 
 dotenv.config();
 
 const Editor = () => {
   const [thumbnail, setThumbnail] = useState(null);
-  const onFinish = (value) => console.log(value);
+  const dispatch = useDispatch();
+  const onFinish = (value) => {
+    const token = localStorage.getItem('token');
+    const data = {
+      ...value,
+      token,
+      fileUrl: thumbnail,
+    };
+    dispatch({
+      type   : POSTS_UPLOAD_REQUEST,
+      payload: data,
+    });
+  };
   const onFinishFailed = (err) => console.log(err);
   return (
     <Container>
@@ -77,12 +91,7 @@ const Editor = () => {
               } else {
                 setThumbnail(process.env.REACT_APP_DEFAULT_THUMBNAIL);
               }
-
             }}
-
-            // onFocus={(event, editor) => {
-            //   console.log('Focus.', editor);
-            // }}
           />
         </Form.Item>
         <Form.Item wrapperCol={{offset: 8, span: 16}}>
