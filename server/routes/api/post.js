@@ -14,7 +14,7 @@ import {isNullOrUndefined} from 'util';
 dotenv.config();
 
 const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_KEY,
+  accessKeyId    : process.env.AWS_KEY,
   secretAccessKey: process.env.AWS_PRIVATE_KEY
 });
 
@@ -40,18 +40,6 @@ router.get('/', async (req, res) => {
   res.json(postFindResult);
 });
 
-router.post('/', auth, async (req, res, next) => {
-  try {
-    console.log(`[post req] : ${req}`);
-    const {title, contents, fileUrl, creator} = req.body;
-    const newPost = await Post.create({title, contents, fileUrl, creator});
-    console.log(`[await res] : ${newPost}`);
-    res.json(newPost);
-  } catch (e) {
-    console.log(`[async error] : ${e}`);
-  }
-});
-
 router.post('/image', uploadS3.array('upload', 5), async (req, res, next) => {
   try {
     console.log(req.files.map(v => v.location));
@@ -62,15 +50,15 @@ router.post('/image', uploadS3.array('upload', 5), async (req, res, next) => {
   }
 });
 
-router.post('/', uploadS3.none(), async (req, res, next) => {
+router.post('/', auth, uploadS3.none(), async (req, res, next) => {
   try {
     const {title, category, contents, fileUrl, creator} = req.body;
     const newPost = await Post.create({
       title,
       contents,
       fileUrl,
-      creator,
-      date: moment().format('YYYY-MM-DD hh:mm:ss')
+      creator: req.user.id,
+      date   : moment().format('YYYY-MM-DD hh:mm:ss')
     });
 
     const findResult = await Category.findOne({
@@ -118,6 +106,7 @@ router.get('/:id', async (req, res, next) => {
       path  : 'category',
       select: 'categoryName'
     });
+    res.json(post);
   } catch (e) {
     console.error(e);
     next(e);
