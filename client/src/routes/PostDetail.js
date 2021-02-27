@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {} from 'react-helmet';
+import {Helmet} from 'react-helmet';
 import {POST_DELETE_REQUEST, POST_DETAIL_REQUEST, USER_LOADING_REQUEST} from '../redux/types';
-import CKEditor from '@ckeditor/ckeditor5-react';
+import {CKEditor} from '@ckeditor/ckeditor5-react';
+import BalloonEditor from "@ckeditor/ckeditor5-editor-balloon/src/ballooneditor";
 import {Button, Col, Row} from 'antd';
 import {Link} from 'react-router-dom';
+import {editorConfiguration} from '../components/PostEditor/EditorConfig';
 
 function PostDetail({match}) {
   const dispatch = useDispatch();
@@ -58,10 +60,22 @@ function PostDetail({match}) {
       payload: localStorage.getItem('token')
     });
   }, [dispatch, match]);
-  console.log(title)
+
+
   return (
     <>
-      <div>PostDetail</div>
+      <Helmet title={`POST || ${title}`}/>
+      {userId === createId ? EditButton : HomeButton}
+      <div>
+        <p>title : {title}</p>
+        <p>user : {userName}</p>
+        <CKEditor
+          editor={BalloonEditor}
+          data={postDetail.contents}
+          config={editorConfiguration}
+          disabled
+        />
+      </div>
     </>
   );
 }
